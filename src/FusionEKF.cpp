@@ -46,12 +46,14 @@ FusionEKF::FusionEKF() {
 
     // Initalize state Covariance Matric P
     //As Prediction is linear in Laser and Radar type filter we have only P matrix
+
+    //  [.11, .11, 0.52, 0.52].
     ekf_.P_ = MatrixXd(4, 4);
     // Initalize state Covariance Matric P for radar
     ekf_.P_ << 1, 0, 0, 0, //px
                0, 1, 0, 0,   //py
-               0, 0, 1000, 0, //vx
-               0, 0, 0, 1000; //vy
+               0, 0, 2, 0, //vx
+               0, 0, 0, 10; //vy
 
 
     //Initalize the inital state transition Matric
