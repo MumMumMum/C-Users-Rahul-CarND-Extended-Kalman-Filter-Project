@@ -24,17 +24,20 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   float vy = x_state(3);
 
   //pre-compute a set of terms to avoid repeated calculation
-  float c1 = px * px + py * py;
+  float eps = 0.001;
+  float c1 = std::max(eps,(px*px + py*py) );
+  //float c1 = px * px + py * py;
   float c2 = sqrt(c1);
   float c3 = (c1 * c2);
 
   MatrixXd Hj(3,4);
   //check division by zero
   Hj.fill(0.0);
-  if (fabs(c1) < 0.001) {
+  //As per suggestion setting c1 to 0.001 instead of if and return stmy
+  /*if (fabs(c1) <= 0.001) {
     std::cout << "CalculateJacobian () - Error - Division by Zero" << std::endl;
     return Hj;
-  }
+  }*/
 
   //compute the Jacobian matrix
   Hj <<    (px / c2), (py / c2), 0, 0,

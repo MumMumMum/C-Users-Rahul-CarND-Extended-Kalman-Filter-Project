@@ -55,7 +55,22 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   */
   //new estimate
   float rho = sqrt(x_(0)*x_(0) + x_(1)*x_(1));
-  float phi = atan2(x_(1), x_(0));
+  //trying to cover the case when py = 0 and px = 0;
+  /* float eps = 0.001;
+  float py  = x_(1);
+  float px =  x_(0);
+  float c0 = std::max(eps,py );
+  float c1 = std::max(eps,px );
+  float phi = atan2(c0, c1);*/
+  // With the above solution, RMSE is too high so commented the code
+  // and used earlier expression.
+  float py  = x_(1);
+  float px =  x_(0);
+  float phi = 0.0;
+  if (py == 0 & px == 0 )
+    phi = 0.001;
+  else
+    phi = atan2(x_(1), x_(0));
   float rho_dot;
   if (fabs(rho) < 0.0001) {
     rho_dot = 0;

@@ -52,8 +52,8 @@ FusionEKF::FusionEKF() {
     // Initalize state Covariance Matric P for radar
     ekf_.P_ << 1, 0, 0, 0, //px
                0, 1, 0, 0,   //py
-               0, 0, 2, 0, //vx
-               0, 0, 0, 10; //vy
+               0, 0, 1000, 0, //vx
+               0, 0, 0, 1000; //vy
 
 
     //Initalize the inital state transition Matric
