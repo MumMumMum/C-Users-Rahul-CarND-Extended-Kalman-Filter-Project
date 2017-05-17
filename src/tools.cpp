@@ -30,15 +30,16 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
   MatrixXd Hj(3,4);
   //check division by zero
-  if (fabs(c1) < 0.0001) {
+  Hj.fill(0.0);
+  if (fabs(c1) < 0.001) {
     std::cout << "CalculateJacobian () - Error - Division by Zero" << std::endl;
     return Hj;
   }
 
   //compute the Jacobian matrix
-  Hj << (px / c2), (py / c2), 0, 0,
+  Hj <<    (px / c2), (py / c2), 0, 0,
           -(py / c1), (px / c1), 0, 0,
-          py * (vx * py - vy * px) / c3, px * (px * vy - py * vx) / c3, px / c2, py / c2;
+            py * (vx * py - vy * px) / c3, px * (px * vy - py * vx) / c3, px / c2, py / c2;
 
   return Hj;
 }
